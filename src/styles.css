@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  margin: 0px;
+}
+
+.fixed-header,
+.fixed-footer {
+  width: 100%;
+  position: relative;
+  background: #563d7c;
+  padding: 10px 0;
+  color: rgb(24, 209, 223);
+}
+
+.fixed-header {
+  top: 0;
+  margin-bottom: 40px;
+  padding: 5px 30px;
+}
+
+.fixed-footer {
+  bottom: 0;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}

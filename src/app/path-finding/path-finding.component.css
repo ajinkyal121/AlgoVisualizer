@@ -1,0 +1,15 @@
+.btn {
+  margin: 5px !important;
+}
+
+.grid {
+  width: 25px;
+  display: inline-block;
+}
+
+.node {
+  width: 25px;
+  height: 25px;
+  outline: 1px solid rgb(175, 216, 248);
+  /* background: #af89e9; */
+}
