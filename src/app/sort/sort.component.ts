@@ -62,13 +62,15 @@ export class SortComponent implements OnInit {
       case 'Bubble Sort':
         this.bubbleSorts();
         break;
+      case 'Merge Sort':
+        this.mergeSorts();
+        break;
+
 
       default:
         break;
     }
   }
-
-
 
   async bubbleSorts() {
     this.running = true;
@@ -101,16 +103,83 @@ export class SortComponent implements OnInit {
     return this.array;
   }
 
-  async mergeSort() {
-    //TODO 
+  async mergeSorts() {
+    this.running = true;
+    await this.mergeSort(this.array, 0, this.array.length - 1);
+  }
+
+  async mergeSort(array: number[], left: number, right: number) {
+
+    if (array.length <= 1 && this.running) {
+      return array;
+    }
+
+    if (left < right && this.running) {
+      const mid = Math.floor((left + right) / 2);
+
+      await this.mergeSort(array, left, mid);
+
+      await this.mergeSort(array, mid + 1, right);
+
+      await this.merge(array, left, mid, right);
+    }
+
+  }
+
+  async merge(array: number[], left: number, mid: number, right: number) {
+
+    let n1 = mid - left + 1;
+    let n2 = right - mid;
+    let Left: number[] = [];
+    let Right: number[] = [];
+    for (let i = 0; i < n1; i++) { Left.push(0); }
+    for (let i = 0; i < n2; i++) { Right.push(0); }
+
+    for (let i = 0; i < n1; i++) {
+      Left[i] = array[left + i];
+    }
+    for (let i = 0; i < n2; i++) {
+      Right[i] = array[mid + 1 + i];
+    }
+
+    let i = 0;
+    let j = 0;
+    let k = left;
+    for (; i < n1 && j < n2;) {
+      if (Left[i] <= Right[j]) {
+        array[k] = Left[i];
+        i++;
+      } else {
+        array[k] = Right[j];
+        j++;
+      }
+      k++;
+      await new Promise(resolve => setTimeout(resolve, this.speedTime));
+    }
+
+    for (; i < n1;) {
+      array[k] = Left[i];
+      i++;
+      k++;
+      await new Promise(resolve => setTimeout(resolve, this.speedTime));
+    }
+    for (; j < n2;) {
+      array[k] = Right[j];
+      j++;
+      k++;
+      await new Promise(resolve => setTimeout(resolve, this.speedTime));
+    }
+
+    if (!this.running) { return; }
+
   }
 
   async quicksort() {
-    //TODO
+    // TODO
   }
 
   async heapsort() {
-    //TODO 
+    // TODO
   }
 
 }
