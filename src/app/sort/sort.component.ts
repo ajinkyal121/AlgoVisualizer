@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class SortComponent implements OnInit {
   array = [];
-  algos = ['Bubble Sort', 'Merge Sort', 'Quick Sort', 'Heap Sort'];
+  algos = ['Bubble Sort', 'Merge Sort', 'Quick Sort'];
   selectedAlgo: string;
   speed = ['Slow', 'Medium', 'Fast'];
   selectedSpeed: string;
@@ -65,6 +65,9 @@ export class SortComponent implements OnInit {
       case 'Merge Sort':
         this.mergeSorts();
         break;
+      case 'Quick Sort':
+        this.quicksorts();
+        break;
 
 
       default:
@@ -106,6 +109,7 @@ export class SortComponent implements OnInit {
   async mergeSorts() {
     this.running = true;
     await this.mergeSort(this.array, 0, this.array.length - 1);
+    this.running = false;
   }
 
   async mergeSort(array: number[], left: number, right: number) {
@@ -174,8 +178,46 @@ export class SortComponent implements OnInit {
 
   }
 
-  async quicksort() {
-    // TODO
+  async quicksorts() {
+    this.running = true;
+
+    await this.quickSort(this.array, 0, this.array.length - 1);
+
+    this.running = false;
+  }
+
+  async quickSort(array: number[], low: number, high: number) {
+    if (low < high && this.running) {
+      const pivot = await this.partition(array, low, high);
+      if (this.running) { await this.quickSort(array, low, pivot - 1); }
+      if (this.running) { await this.quickSort(array, pivot + 1, high); }
+    }
+  }
+
+  async partition(array: number[], low: number, high: number) {
+    const pivot = array[high];
+    let i = (low - 1);
+
+    for (let j = low; j <= high - 1 && this.running; j++) {
+
+      if (array[j] < pivot) {
+        i++;
+        const temp = this.array[i];
+        this.array[i] = this.array[j];
+        this.array[j] = temp;
+
+        await new Promise(resolve => setTimeout(resolve, this.speedTime));
+
+      }
+    }
+    if (this.running) {
+      const temp = this.array[i + 1];
+      this.array[i + 1] = this.array[high];
+      this.array[high] = temp;
+
+      await new Promise(resolve => setTimeout(resolve, this.speedTime));
+      return (i + 1);
+    }
   }
 
   async heapsort() {
