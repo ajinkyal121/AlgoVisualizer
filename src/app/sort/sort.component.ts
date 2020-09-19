@@ -128,10 +128,10 @@ export class SortComponent implements OnInit {
 
   async merge(array: number[], left: number, mid: number, right: number) {
 
-    let n1 = mid - left + 1;
-    let n2 = right - mid;
-    let Left: number[] = [];
-    let Right: number[] = [];
+    const n1 = mid - left + 1;
+    const n2 = right - mid;
+    const Left: number[] = [];
+    const Right: number[] = [];
     for (let i = 0; i < n1; i++) { Left.push(0); }
     for (let i = 0; i < n2; i++) { Right.push(0); }
 
